@@ -1,0 +1,158 @@
+.Home {
+    border: none;
+    border-right: 1px solid rgb(47,51,54);
+    
+    padding: 0px 0px 10px 10px;
+    font-family: 'Noto Sans Batak', sans-serif;
+    nav {
+        z-index: 999;
+        // position: sticky;
+        // top: 0;
+        // transition: 0.3s ease-in-out
+        
+        h3 {
+            font-size: 20px;
+            margin: 10px 0px 0px 0px;
+        }
+        .tablist {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(211, 211, 211, 0.307);
+            .forYou {
+                flex: 1;
+                border-right: 1px solid rgba(211, 211, 211, 0.307);
+                font-weight: bold;
+                padding: 15px 10px 15px 10px;
+                display: flex;
+                justify-content: center;
+
+                span {
+                    font-weight: 900;
+                    cursor: pointer;
+                }
+            }
+
+            .following {
+                flex: 1;
+                
+                padding: 15px 10px 15px 10px;
+                display: flex;
+                justify-content: center;
+
+                span  {
+                    font-weight: 900;
+                    cursor: pointer;
+                }
+            }
+
+            .following:hover, .forYou:hover {
+                background-color: rgba(98, 96, 96, 0.273);
+            }
+        }
+    }
+
+    
+
+    .createPost {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        border-bottom: 1px solid rgb(47,51,54);
+        .content {
+            display: flex;
+            flex-direction: row;
+
+            .left {
+                width: 10%;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    
+                }
+            }
+
+            .right {
+                width: 90%;
+                color: whitesmoke;
+                input {
+                    padding: 15px 15px 15px 10px;
+                    color: whitesmoke;
+                    width: 95%;
+                    background-color: rgb(0,0,0,0);
+                    border: none;
+                    pointer-events: visibleFill;
+                }
+            }
+
+        }
+
+        .action {
+            display: flex;
+            flex-direction: row;
+            margin-left: 10%;
+            padding-right: 10px;
+            margin-top: 10px;
+            justify-content: space-between;
+            border-top: 1px solid rgb(47,51,54);
+            align-items: center;
+
+            .leftIcon {
+                padding: 10px 10px 10px 0px;
+                
+                a {
+                    margin-right: 15px;
+
+                    .icon {
+                        color: rgb(22,116,180);
+                        padding: 10px;
+                        border-radius: 50%;
+                    }
+
+                    .icon:hover {
+                        background-color: rgba(211, 211, 211, 0.252);
+                    }
+                }
+            }
+
+            .btnRight {
+                display: flex;
+                align-items: center;
+                button {
+                    color: whitesmoke;
+                    font-size: 15px;
+                    font-weight: bold;
+                    padding: 10px 15px;
+                    border-radius: 20px;
+                    border: none;
+                    background-color: rgba(77, 177, 248, 0.796);
+                }
+
+                button:hover {
+                    background-color: rgba(77, 177, 248, 0.607);
+                }
+            }
+        }
+
+        
+    }
+    .hidePost {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-top: 1px solid rgb(47,51,54);
+        
+        span {
+            color: rgb(22,116,180);
+            font-weight: 500;
+        }
+        
+    }
+
+
+    
+}

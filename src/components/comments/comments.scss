@@ -1,0 +1,83 @@
+.comments {
+    border: 1px solid lightgrey;
+    border-top: none;
+    border-radius: 20px;
+    padding: 10px 10px 0px 10px;
+    font-size: 15px;
+
+    .write {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 20px 0px;
+
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid lightblue;
+            background-color: transparent;
+            border-radius: 10px;
+            color: white;
+        }
+
+        button {
+            border: none;
+            background-color: rgba(77, 177, 248, 0.796);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+        button:hover {
+            background-color: rgba(77, 177, 248, 0.607);
+        }
+    }
+    
+    .comment {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+        
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+
+        }
+
+        .info {
+            display: flex;
+            flex: 5;
+            flex-direction: column;
+            gap: 3px;
+            align-items: flex-start;
+
+            span {
+                font-weight: bolder;
+            }
+
+            p {
+                font-weight: 200;
+            }
+        }
+
+        .date {
+            flex: 1;
+            align-self: center;
+            color: rgba(211, 211, 211, 0.536);
+            font-size: 12px;
+        }
+    }
+}

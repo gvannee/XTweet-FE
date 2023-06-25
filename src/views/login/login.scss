@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    .login {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: aliceblue;
+        position: relative;
+        opacity: 1;
+        font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+        background: linear-gradient(6deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+
+        .card {
+            display: flex;
+            width: 70%;
+            min-height: 300px;
+
+            .left {
+                flex: 1;
+                padding: 50px;
+
+                h1 {
+                    font-size: 50px;
+                    font-family: 'Pacifico', cursive;
+                }
+
+                p {
+                    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+                    font-size: 28px;
+                    background-image: linear-gradient(1deg, rgba(2, 0, 36, 1) 0%, rgba(34, 34, 207, 1) 0%, rgba(0, 212, 255, 1) 100%);
+                    background-size: 100%;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+
+                span {}
+
+                button {}
+            }
+
+            .right {
+                flex: 0.5;
+                padding: 35px 35px 15px 35px;
+                display: flex;
+                flex-direction: column;
+                
+                background-color: white;
+                box-shadow: 10px 10px 8px 10px rgba(211, 211, 211, 0.068);
+                border-radius: 10px;
+                justify-content: center;
+                
+                text-align: center;
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    input {
+                        border: 1px solid lightgray;
+                        border-radius: 10px;
+                        padding: 15px 10px;
+                        cursor: pointer;
+                    }
+
+                    .btnLogin{
+                        width: 100%;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 10px;
+                        background: rgba(5, 124, 222, 0.741);
+                        font-family: 'Caladea', serif;
+                        cursor: pointer;
+                        color: black;
+                        
+                    }
+
+                    .btnLogin:hover {
+                        background: linear-gradient(6deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+                        color: white;
+                        
+                        
+                    }
+                }
+
+                a {
+                    color: #1877f2;
+                    font-size: 14px;
+                    text-decoration: none;
+                    border: none;
+                    border-bottom: 1px solid lightgray;
+                    padding: 20px 0px;
+                }
+
+                a:hover {
+                    text-decoration: underline;
+                }
+
+
+
+                .btnRegister, .signup {
+                    align-self: center;
+                    font-size: 15px;
+                    width: 70%;
+                    margin-top: 13px;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    padding: 15px 0px;
+                    border: none;
+                    font-family: 'Caladea', serif;
+                    background-color: lightgray;
+                    
+                }
+
+                .btnRegister:hover {
+                    background: linear-gradient(0deg, rgba(238,237,61,1) 0%, rgba(253,187,45,1) 100%);
+                }
+            }
+        }
+
+
+    }
+}

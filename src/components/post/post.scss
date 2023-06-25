@@ -1,0 +1,142 @@
+.post {
+    .showPost {
+        display: flex;
+        flex-direction: row;
+        padding: 12px 10px 10px 10px;
+        border-top: 1px solid rgb(47, 51, 54);
+
+        .avatar {
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+
+            }
+        }
+
+        .postInfo {
+            padding: 0px 10px 10px 10px;
+
+            .title {
+                display: flex;
+                justify-content: space-between;
+                text-align: center;
+
+                .left {
+                    font-size: 15px;
+                    display: flex;
+                    padding: 2px 0px 5px 0px;
+
+                    span {
+                        font-weight: bold;
+                    }
+
+                    span:hover {
+                        text-decoration: underline;
+                    }
+
+                    .username {
+
+                        font-weight: lighter;
+                        margin: 0px 10px;
+                        color: rgba(211, 211, 211, 0.536);
+                    }
+
+                    .username:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+
+            .content {
+                font-size: 15px;
+                display: flex;
+                flex-direction: column;
+                line-break: auto;
+                padding-top: 4px;
+
+                p {
+                    margin-top: 0px;
+                }
+
+                img {
+                    max-height: 70vh;
+
+                    object-fit: cover;
+                    border-radius: 20px;
+                }
+
+                .reaction {
+                    padding: 10px 0px 10px 5px;
+                    display: flex;
+
+                    .like {
+                        margin-right: 35px;
+                        display: flex;
+                        align-items: center;
+
+                        .icon1 {
+                            padding: 8px;
+                            color: rgba(211, 211, 211, 0.536);
+                            border-radius: 50%;
+                        }
+
+                        .icon1:hover {
+                            color: red;
+                            background-color: rgb(120, 6, 6);
+                        }
+
+                        .icon4 {
+                            margin-right: 35px;
+                            padding: 8px;
+                            color: red;
+                            border-radius: 50%;
+                        }
+
+                        .icon4:hover {
+                            color: red;
+                            background-color: rgb(120, 6, 6);
+                        }
+                    }
+
+                    .comment {
+                        margin-right: 35px;
+                        display: flex;
+                        align-items: center;
+
+                        .icon2 {
+                            padding: 8px;
+                            color: rgba(211, 211, 211, 0.536);
+                            border-radius: 50%;
+                        }
+
+                        .icon2:hover {
+                            color: rgb(81, 255, 0);
+                            background-color: rgba(51, 145, 7, 0.947);
+                        }
+
+
+
+                    }
+
+                    .icon3 {
+                        margin-right: 35px;
+                        padding: 8px;
+                        color: rgba(211, 211, 211, 0.536);
+                        border-radius: 50%;
+                    }
+
+
+                    .icon3:hover {
+                        color: rgb(0, 183, 255);
+                        background-color: rgb(7, 118, 162);
+                    }
+
+
+                }
+            }
+        }
+    }
+}

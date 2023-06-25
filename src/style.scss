@@ -1,0 +1,51 @@
+$themes: (
+    light: (
+        textColor: black,
+        bg: white,
+        tweet: rgb(115, 130, 140),
+        bgButton: black,
+        bgRightBar: rgb(246, 248, 248),
+        borderColor: black,
+        bgSearch: whitesmoke,
+      
+        ),
+        
+
+    dark: (
+        textColor: whiteSmoke,
+        bg: black,
+        bgSearch: rgb(32, 35, 39),
+        tweet: rgba(211, 211, 211, 0.536),
+        bgButton: whitesmoke,
+        bgRightBar: rgb(22, 24, 28),
+        username: lightgrey,
+        borderColor: whitesmoke),
+        
+);
+
+
+@mixin themify($themes) {
+
+    @each $theme,
+    $map in $themes {
+        .theme-#{$theme} & {
+            $them-map: () !global;
+
+            @each $key,
+            $submap in $map {
+                $value: map-get(map-get($themes, $theme), "#{$key}");
+                $theme-map: map-merge($map1: $them-map, $map2: ($key: $value,
+                    )) !global;
+            }
+
+            @content;
+            $them-map: null !global
+        }
+    }
+}
+
+@function themed($key) {
+    @return map-get($map: $theme-map, $key: $key)
+}
+
+
