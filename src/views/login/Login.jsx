@@ -56,9 +56,9 @@ const Login = () => {
         <div className="login">
             <div className="card">
                 <div className='left'>
-                    <h1>Xtweet</h1>
+                    <h1>Mewtweet</h1>
                     <p>
-                        Xtweet helps you connect and share with the people in your life.
+                        Mewtweet helps you connect and share cats with the people in your life.
                     </p>
                 </div>
                 <div className='right'>

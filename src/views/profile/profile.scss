@@ -1,0 +1,121 @@
+.profile {
+    font-family: 'Noto Sans Batak', sans-serif;
+    border-right: 1px solid rgb(47,51,54);
+    nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding: 2px 15px 5px 15px;
+        .icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon:hover {
+            background-color: rgba(211, 211, 211, 0.252);
+        }
+        p {
+            margin: 0px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        span {
+            font-size: 12px;
+            color: rgba(211, 211, 211, 0.536);
+        }
+    }
+
+    .images {
+       height: 200px;
+        .cover {
+                width: 100%;
+                height: 100%;
+                
+        }
+
+        .edit {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+           
+            img {
+                margin-top: -12%;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            
+        }
+        
+    }
+
+    .profileContainer {
+        margin-top: 10%;
+        padding: 10px;
+        
+        .userInfo {
+            display: flex;
+            flex-direction: column;
+            .name {
+                
+                p {
+                    margin: 0px;
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+        
+                span {
+                    font-size: 15px;
+                    color: rgba(211, 211, 211, 0.536);
+                }
+            }
+
+            .place {
+                display: flex;
+                margin-top: 5px;
+                gap: 23px;
+                color: rgba(211, 211, 211, 0.536);
+                padding-left: 5px;
+
+                .born, .stayAt {
+                    span {
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+
+        .follow {
+            display: flex;
+            gap: 18px;
+            margin-top: 10px;
+            .following, .follower {
+                .number {
+                    font-weight: bold;
+                    margin-right: 5px;
+                    color: whitesmoke;
+                }
+
+                span {
+                    color: rgba(211, 211, 211, 0.536);
+                }
+
+                span:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
+        }
+        
+        .post {
+            margin-top: 10px;
+        }
+    }
+}

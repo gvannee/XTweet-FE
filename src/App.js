@@ -12,30 +12,38 @@ import {
 } from "react-router-dom"
 import { useContext } from 'react';
 import { AuthContext } from './context/authContext';
+import {
+  QueryClient,
+  QueryClientProvider,
+
+} from '@tanstack/react-query'
 
 
 
 function App() {
-  const {currentUser} = useContext(AuthContext);
-  
+  const { currentUser } = useContext(AuthContext);
 
+  const queryClient = new QueryClient();
   const Layout = () => {
     return (
-      <div>
-        <div style={{ display: 'flex', color: 'white' }} >
-          <LeftBar />
-          <div style={{flex: 6}}>
-          <Outlet />
+      <QueryClientProvider client={queryClient}>
+        <div>
+          <div style={{ display: 'flex', color: 'white' }} >
+            <LeftBar />
+            <div style={{ flex: 6 }}>
+              <Outlet />
+            </div>
+
+            <RightBar />
           </div>
-          
-          <RightBar />
         </div>
-      </div>
+      </QueryClientProvider>
+
     )
   }
 
-  const ProtectedRoute = ({children}) => {
-    if(!currentUser) {
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
       return <Navigate to="/login" />
     }
     return children;
@@ -55,7 +63,7 @@ function App() {
         },
 
         {
-          path: "/profile?id=",
+          path: "/profile/:id",
           element: <Profile />,
         }
       ]

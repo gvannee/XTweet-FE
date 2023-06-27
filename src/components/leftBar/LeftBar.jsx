@@ -1,7 +1,7 @@
 import './leftBar.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-    faPoo, faHouse, faMagnifyingGlass, faBell,
+    faPaw, faHouse, faMagnifyingGlass, faBell,
     faBookmark, faEnvelope, faListUl, faCircleCheck, faUser,
     faAnglesRight, faPlus
 } from '@fortawesome/free-solid-svg-icons'
@@ -18,7 +18,7 @@ const LeftBar = () => {
                 <div className="top">
                     <div className="logo">
                         <a href="#">
-                        <FontAwesomeIcon icon={faPoo} className='logoIcon' />
+                        <FontAwesomeIcon icon={faPaw} className='logoIcon' />
                         </a>
                     </div>
                     <div className="menu">
