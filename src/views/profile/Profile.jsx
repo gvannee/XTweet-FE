@@ -4,90 +4,174 @@ import {
     faArrowLeft, faLocationDot, faBasketball
 } from '@fortawesome/free-solid-svg-icons';
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import Button from '../../components/buttonCustom/ButtoneCustom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import PostProfile from '../../components/PostProfile/PostProfile';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import Update from '../../components/update/Update';
 const Profile = () => {
     const { currentUser } = useContext(AuthContext);
-
-
+    const [openUpdate, setUpdate] = useState(false)
+    const queryClient = useQueryClient();
     let { id } = useParams();
     const { isLoading, error, data } = useQuery({
-        queryKey: ['posts'],
+        queryKey: ['user'],
         queryFn: () =>
-          makeRequest.get(`/user/${id}`)
-            .then(res => {
-              return res.data;
-            })
-      })
+            makeRequest.get(`/user/${id}`)
+                .then(res => {
+
+
+
+                    return res.data;
+                })
+    })
+    console.log(typeof data);
+
+    const { isLoading: relationshipLoading, data: relationshipData } = useQuery(['relationship'],
+        () =>
+            makeRequest.get(`/getFollow`)
+                .then(res => {
+
+
+
+                    return res.data;
+                })
+    )
+
+    const { isLoading: follower, data: followerData } = useQuery(['follower', 'relationship'],
+        () =>
+            makeRequest.get(`/getFollowed/` + id)
+                .then(res => {
+
+
+
+                    return res.data;
+                })
+    )
+
+    const mutation = useMutation((followed) => {
+        if (followed) return makeRequest.delete("/unfollow/" + id)
+        return makeRequest.post("/follow/" + id)
+    }
+        ,
+        {
+            onSuccess: (res) => {
+                queryClient.invalidateQueries(["relationship"])
+                console.log(res.data);
+            }
+        })
+
+    console.log(relationshipData);
+
+    const handleClick = () => {
+        mutation.mutate(relationshipData.includes(id))
+    }
 
     return (
         <div className="profile">
-            <nav>
-                <div className="icon">
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                </div>
 
-                <div className="name">
-                    <p>Name</p>
+            {data && data.map((post, index) => {
 
-                    <span>1 Tweet</span>
 
-                </div>
-            </nav>
-            <div className="images">
-                <img src="https://images.immediate.co.uk/production/volatile/sites/25/2023/02/why-sky-blue-2db86ae.jpg?quality=90&webp=true&resize=1200,800" alt="" className='cover' />
-                <div className="edit">
-                    <img src="https://thumbor.bigedition.com/cat-yelling-at-a-skeleton/xGqZpCpf8c0xVbHjeBZn_k_JiTc=/765x800/filters:format(webp):quality(80)/granite-web-prod/e0/d7/e0d762004dd143669b61860e5b5ff9ab.jpeg" alt="" className='profilePic' />
-                    <Button value="Edit profile" />
-                </div>
-            </div>
+                return (<>
+                    <nav>
+                        <div className="icon">
+                            <Link to="/" style={{
+                                background: "none",
+                                color: 'none',
+                                textDecoration: 'none',
+                                color: 'inherit'
+                            }}>
+                                <FontAwesomeIcon icon={faArrowLeft} />
+                            </Link>
 
-            <div className="profileContainer">
-                <div className="userInfo">
-                    <div className="name">
-                        <p>Name</p>
-
-                        <span>@username</span>
-                    </div>
-
-                    <div className="place">
-                        <div className="stayAt">
-                            <FontAwesomeIcon icon={faLocationDot} />
-                            <span>Việt Nam</span>
                         </div>
 
-                        <div className="born">
-                            <FontAwesomeIcon icon={faBasketball} />
-                            <span>Born November 13, 2002</span>
+                        <div className="name">
+
+                            <p key={index}>{post?.info?.firstName} {post?.info?.lastName}</p>
+
+                            <span>{post?.post?.length} Tweet</span>
+
                         </div>
+                    </nav>
+                    <div className="images">
+                        <img src={post.info?.coverImg} alt="" className='cover' />
+                        <div className="edit">
+                            <img src={post.info?.profileImg} alt="" className='profilePic' />
 
-                    </div>
+                            {relationshipLoading ? "Loading" : (id == currentUser.id
+                                ? <button onClick={() => setUpdate(true)}>Edit profile</button>
+                                : <button onClick={handleClick}
+                                    value={id}>{Array.isArray(relationshipData) &&
+                                        (relationshipData.includes(id) ? "Following" : "Follow")}</button>)}
 
-                    <div className="follow">
-                        <div className="following">
-                            <span className='number'>3</span>
-                            <span>Following</span>
-                        </div>
-
-                        <div className="follower">
-                            <span className='number'>3</span>
-                            <span>Follower</span>
                         </div>
                     </div>
-                </div>
+                </>)
+            })
+            }
+
+            <div className="profileContainer" >
+                {data && data.map((post, index) => {
+
+                    return(
+                        <div className="userInfo">
+                        <div className="name">
+                            <p>{post.info.firstName} {post.info.lastName}</p>
+
+                            <span>@{post.info.username}</span>
+                        </div>
+
+
+
+                        <div className="place">
+                            <div className="stayAt">
+                                <FontAwesomeIcon icon={faLocationDot} />
+                                <span>Việt Nam</span>
+                            </div>
+
+                            <div className="born">
+                                <FontAwesomeIcon icon={faBasketball} />
+                                <span>Born {post.info.dob}</span>
+                            </div>
+
+                        </div>
+
+                        <div className="follow">
+                            <div className="following">
+                                <span className='number'>{followerData ? followerData.length : 0}</span>
+                                <span>Following</span>
+                            </div>
+
+                            <div className="follower">
+                                <span className='number'>{relationshipData ? relationshipData.length : 0}</span>
+                                <span>Follower</span>
+                            </div>
+                        </div>
+                    </div>
+                    )
+                    
+                })
+                }
 
                 <div className="post">
                     {data && data.map((post, index) => {
-                        return <PostProfile post={post} key={index} />
+
+                        return <>
+                            {post.post?.length !== 0 ? <PostProfile post={post} key={index} /> : null}
+                        </>
                     })}
                 </div>
             </div>
+
+            {openUpdate && <Update setUpdate={setUpdate} user={data.info} />}
         </div>
+
+
     )
 }
 

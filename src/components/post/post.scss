@@ -48,6 +48,25 @@
                         text-decoration: none;
                     }
                 }
+
+                .right {
+                    position: relative;
+                    .pop {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        margin-top: 18px;
+                        z-index: 999;
+
+                        button {
+                            border-radius: 0px;
+                        }
+
+                        button:hover {
+                            background-color: rgb(250, 80, 80);
+                        }
+                    }
+                }
             }
 
             .content {
@@ -89,7 +108,7 @@
                         }
 
                         .icon4 {
-                            margin-right: 35px;
+                            
                             padding: 8px;
                             color: red;
                             border-radius: 50%;

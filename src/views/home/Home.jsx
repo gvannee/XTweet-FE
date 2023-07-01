@@ -19,8 +19,9 @@ const Home = () => {
     const [desc, setDesc] = useState("");
 
     const [inputFile, setInputFile] = useState(false);
+
+
     const queryClient = useQueryClient();
-    const navigate = useNavigate();
     const mutation = useMutation((newPost) => {
         return makeRequest.post("/addPost", newPost)
     }
@@ -37,7 +38,11 @@ const Home = () => {
         mutation.mutate({
             desc: desc
         })
+
+        setDesc("");
     }
+
+    
 
 
 
@@ -59,20 +64,21 @@ const Home = () => {
             <div className="createPost">
                 <div className="content">
                     <div className="left">
-                        <Link to={`/profile/${currentUser.id}`} style={{
+                        <a href={`/profile/${currentUser.id}`} style={{
                             textDecoration: 'none',
                             color: 'inherit',
                             fontWeight: 'bolder',
                             cursor: 'pointer'
                         }}>
                             <img src={currentUser.profileImg} alt='avatar' id={currentUser.id} />
-                        </Link>
+                        </a>
 
                     </div>
 
                     <div className="right">
                         <input type="text" placeholder="What's happening!?"
                             onChange={(e) => { setDesc(e.target.value) }}
+                            value={desc}
                         />
                     </div>
                 </div>

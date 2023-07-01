@@ -3,14 +3,14 @@ import { makeRequest } from '../../axios';
 import Post from '../post/Post';
 
 const Posts = () => {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['posts'],
-    queryFn: () =>
+  const { isLoading, error, data } = useQuery(['posts'],
+    () =>
       makeRequest.get("/newsfeed/posts")
         .then(res => {
+          console.log(res.data.length);
           return res.data;
         })
-  })
+  )
 
 
   return (

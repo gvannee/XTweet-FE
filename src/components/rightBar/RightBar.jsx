@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
+import UserSuggestion from '../rightSuggestion/RightSuggestion';
 const RightBar = () => {
     const { currentUser } = useContext(AuthContext);
 
@@ -75,39 +76,9 @@ const RightBar = () => {
                     <div className="title">
                         <h3>Who to follow</h3>
                     </div>
-                    <div className="user">
-                        <div className="left">
-                            <div className="avatar">
-                                <img src={Avatar} alt="avatar" />
-                            </div>
-
-                            <div className="info">
-                                <p>Name</p>
-                                <span>@username</span>
-                            </div>
-                        </div>
-
-                        <button>
-                            Follow
-                        </button>
-                    </div>
-
-                    <div className="user">
-                        <div className="left">
-                            <div className="avatar">
-                                <img src={Avatar} alt="avatar" />
-                            </div>
-
-                            <div className="info">
-                                <p>Name</p>
-                                <span>@username</span>
-                            </div>
-                        </div>
-
-                        <button>
-                            Follow
-                        </button>
-                    </div>
+                    
+                        <UserSuggestion />
+                    
                     <div className="more">
                         <span className="tag">
                             Show more...
