@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './login.scss'
 import Register from '../register/Register';
 import axios from 'axios';
@@ -17,6 +17,12 @@ const Login = () => {
         email: email,
         password: password,
     }
+    let confirm = false
+    const {currentUser} = useContext(AuthContext)
+
+
+
+   
 
     const showRegister = (event) => {
        
@@ -41,15 +47,19 @@ const Login = () => {
             await axios.post(`${process.env.REACT_APP_API}/login`, user, {
                 withCredentials: true,
             })
-            login();
-            
+
+            await login()
+            navigate("/")
+
         } catch (err) {
             console.log(err);
             setErr(err.response)
         }
   
-        navigate("/")
+        
     }
+
+    
 
 
     return (

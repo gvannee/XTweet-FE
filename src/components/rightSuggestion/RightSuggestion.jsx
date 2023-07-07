@@ -12,9 +12,9 @@ const UserSuggestion = () => {
     )
     return (
         <>
-            {data && data.map(userInfo => {
+            {Array.isArray(data) ? data.map(userInfo => {
                 return <UserDiv key={userInfo.id} user={userInfo} />
-            })}
+            }) : null}
         </>
     )
 }

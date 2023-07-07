@@ -10,23 +10,41 @@ import { AuthContext } from '../../context/authContext';
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import moment from 'moment';
+import Post from '../post/Post';
 
 
-const PostProfile = ({ post }) => {
-    const {id} = useParams();
+const PostProfile = ({content}) => {
+    const { id } = useParams()
+    const { isLoading: loadingPost, error: postErr, data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () =>
+            makeRequest.get(`/userInfo?id=${id}`)
+                .then(res => {
+
+                    return res.data;
+                })
+    })
+
+    const [popUp, setPopUp] = useState(false);
     const { currentUser } = useContext(AuthContext)
-    const { isLoading, error, data: like } = useQuery(['likes', post.post._id],
+
+    
+    const [commentOp, setCommentOp] = useState(false);
+ 
+
+
+    const { isLoading, error, data } = useQuery(['likes', content?._id],
         () =>
-            makeRequest.get("/likes?postId=" + post.post._id)
+            makeRequest.get("/likes?postId=" + content?._id)
                 .then(res => {
                     return res.data;
                 })
     )
     const queryClient = useQueryClient()
-    console.log(like);
+
     const mutation = useMutation((liked) => {
-        if (liked) return makeRequest.delete("/likes/delete?postId=" + post.post._id)
-        return makeRequest.post("/likes/add?postId=" + post.post._id)
+        if (liked) return makeRequest.delete("/likes/delete?postId=" + content?._id)
+        return makeRequest.post("/likes/add?postId=" + content?._id)
     }
         ,
         {
@@ -35,88 +53,115 @@ const PostProfile = ({ post }) => {
                 console.log(res.data);
             }
         })
+
+    const { isLoading: loading, error: err, data: comments } = useQuery({
+        queryKey: ['comments'],
+        queryFn: () =>
+            makeRequest.get("/comments?postId=" + content?._id)
+                .then(res => {
+                    return res.data;
+                })
+    })
     const handleLike = () => {
-        console.log(like.includes(id));
-        mutation.mutate(like.includes(id))
+        console.log(data.includes(currentUser.id));
+        mutation.mutate(data.includes(currentUser.id))
     }
 
-    console.log(like);
-    
+    const mutation1 = useMutation(() => {
 
-    const posts = post.post
-    const [commentOp, setCommentOp] = useState(false);
+        return makeRequest.delete("/posts/delete/" + content?._id)
+    }
+        ,
+        {
+            onSuccess: (res) => {
+                queryClient.invalidateQueries(["posts"])
+                console.log(res.data);
+            }
+        })
+
+    const handleDelete = () => {
+        mutation1.mutate();
+    }
+
+
     return (
-        <div className="post">
-            {Array.isArray(posts) ? posts.map((data, index) => {
-                return (
-                    <div className="showPost" key={index}>
-                        <div className="avatar">
-                            <Link to={`/profile/${post.info?._id}`} style={{
-                                textDecoration: 'none',
-                                color: 'inherit',
-                                fontWeight: 'bolder',
-                                cursor: 'pointer'
-                            }}>
-                                <img src={post.info?.profileImg} alt='avatar'  />
-                            </Link>
-                        </div>
+        <>
+            
+                    <div className="post" >
 
-                        <div className="postInfo">
-                            <div className="title">
-                                <div className="left">
-                                    <Link to={`/profile/${post.info?.userId}`} style={{
-                                        textDecoration: 'none',
-                                        color: 'inherit',
-                                        fontWeight: 'bolder'
-                                    }}>
-                                        <span>{post.info?.firstName} {post.info?.lastName}</span>
-                                    </Link>
+                        <div className="showPost">
+                            <div className="avatar">
+                                <a href={`/profile/${user?._id}`} style={{
+                                    textDecoration: 'none',
+                                    color: 'inherit',
+                                    fontWeight: 'bolder',
+                                    cursor: 'pointer'
+                                }}>
+                                    <img src={user?.profileImg} alt='avatar' />
+                                </a>
+                            </div>
 
-                                    <span className='username'>@{post.info?.username}</span>
-                                    <span className='username'>{moment(data.createdAt).fromNow()}</span>
+                            <div className="postInfo">
+                                <div className="title">
+                                    <div className="left">
+                                        <a href={`/profile/${user?._id}`} style={{
+                                            textDecoration: 'none',
+                                            color: 'inherit',
+                                            fontWeight: 'bolder'
+                                        }}>
+                                            <span>{user?.firstName} {user?.lastName}</span>
+                                        </a>
+
+                                        <span className='username'>@{user?.username}</span>
+                                        <span className='username'>{moment(content?.createdAt).fromNow()}</span>
+                                    </div>
+
+                                    <div className="right">
+                                        <FontAwesomeIcon icon={faEllipsis} onClick={(e) => setPopUp(!popUp)} />
+                                        {popUp ? <div className="pop">
+                                            <button onClick={handleDelete}>delete</button>
+                                        </div>
+                                            : null}
+
+                                    </div>
                                 </div>
 
-                                <div className="right">
-                                    <FontAwesomeIcon icon={faEllipsis} />
+                                <div className="content">
+                                    <p>{content?.desc}</p>
+                                    <img src={content?.profileImg} />
+
+                                    <div className="reaction">
+                                        <div className="like">
+                                            {Array.isArray(data) && data.includes(currentUser.id)
+                                                ? <FontAwesomeIcon icon={faHeart} className='icon4' onClick={handleLike} />
+                                                : <FontAwesomeIcon icon={faHeart} className='icon1' onClick={handleLike} />
+                                            }
+                                            {data != null ? <span>{data.length}</span> : <span>0</span>}
+
+                                        </div>
+
+
+                                        <div className="comment" onClick={() => setCommentOp(!commentOp)} >
+                                            <FontAwesomeIcon icon={faCommentAlt} className='icon2' />
+
+
+                                        </div>
+
+                                        <FontAwesomeIcon icon={faShare} className='icon3' />
+
+                                    </div>
+
+                                    {commentOp && <Comments postId={content?._id} />}
                                 </div>
                             </div>
 
-                            <div className="content">
-                                <p>{data.desc}</p>
-                                <img src={data.profileImg} />
 
-                                <div className="reaction">
-                                    <div className="like">
-                                        {Array.isArray(like) && like.includes(id)
-                                            ? <FontAwesomeIcon icon={faHeart} className='icon4' onClick={handleLike} />
-                                            : <FontAwesomeIcon icon={faHeart} className='icon1' onClick={handleLike} />
-                                        }
-                                        {like != null ? <span>{like.length}</span> : <span>0</span>}
-                                    </div>
-
-
-                                    <div className="comment" onClick={() => setCommentOp(!commentOp)}>
-                                        <FontAwesomeIcon icon={faCommentAlt} className='icon2' />
-                                        <span>12</span>
-                                    </div>
-
-                                    <FontAwesomeIcon icon={faShare} className='icon3' />
-
-                                </div>
-
-                                {commentOp && <Comments key={index} postId={data._id} />}
-                            </div>
                         </div>
 
 
                     </div>
-                )
-            }) : null
-            }
-
-
-
-        </div>
+        
+        </>
     )
 }
 

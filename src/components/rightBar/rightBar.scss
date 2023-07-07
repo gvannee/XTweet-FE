@@ -27,6 +27,13 @@
                 color: white;
 
             }
+            input:focus {
+                outline:none;
+
+                .search {
+                    border: 2px solid white;
+                }
+            }
 
 
         }

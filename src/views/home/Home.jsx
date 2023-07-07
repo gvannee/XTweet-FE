@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faImage, faBarsProgress, faFaceSmile, faCalendarDay
 } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/authContext'
 import Post from '../../components/post/Post';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,13 +13,13 @@ import {useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
 
 const Home = () => {
-    const { currentUser } = useContext(AuthContext);
-
+    const { currentUser, login } = useContext(AuthContext);
+    
     const [file, setFile] = useState(null);
     const [desc, setDesc] = useState("");
 
     const [inputFile, setInputFile] = useState(false);
-
+    
 
     const queryClient = useQueryClient();
     const mutation = useMutation((newPost) => {

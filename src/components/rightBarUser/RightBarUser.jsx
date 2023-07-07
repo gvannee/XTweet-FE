@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import './rightBarUser.scss'
+import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 
 const UserDiv = ({ user }) => {
-
+    const {currentUser} = useContext(AuthContext);
     const queryClient = useQueryClient();
     const { isLoading: relationshipLoading, data: relationshipData } = useQuery(['relationship'],
         () =>
@@ -16,7 +18,7 @@ const UserDiv = ({ user }) => {
                 })
     )
 
-  
+
 
     const mutation = useMutation((followed) => {
         if (followed) return makeRequest.delete("/unfollow/" + user.id)
@@ -39,7 +41,15 @@ const UserDiv = ({ user }) => {
         <div className="user">
             <div className="left">
                 <div className="avatar">
-                    <img src={user.profileImg} alt="avatar" />
+                    <a href={`/profile/${user.id}`} style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        fontWeight: 'bolder',
+                        cursor: 'pointer'
+                    }}>
+                        <img src={user.profileImg} alt="avatar" />
+                    </a>
+
                 </div>
 
                 <div className="info">
